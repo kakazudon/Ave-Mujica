@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ave Mujica 台詞搜尋</title>
-	<link rel="icon" type="image/x-icon" href="src/assets/favicon.ico">
+    <title>MyGO!!!!! 台詞搜尋</title>
+    <link rel="icon" type="image/x-icon" href="src/assets/favicon.ico">
     <!-- Font Awesome 圖標庫 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #881144;
+            --primary-color: #3388BB;
             --secondary-color: #ffffff;
         }
 
@@ -193,6 +193,14 @@
             text-align: right;
         }
 
+        .filename-text {
+            display: block;
+            margin-top: 8px;
+            font-size: 14px;
+            color: #ffffff;
+            text-align: center; /* 使檔名置中 */
+        }
+
         @keyframes imageZoom {
             from {
                 transform: scale(0.8);
@@ -229,18 +237,18 @@
 </head>
 <body>
     <div id="searchContainer">
-        <h1>Ave Mujica 台詞搜尋</h1>
+        <h1>MyGO!!!!! 台詞搜尋</h1>
         <input type="text" id="searchBox" placeholder="輸入關鍵字...">
     </div>
 
     <div class="footer-links">
-        <div class="footer-link-item"><a href="https://mygo-searcher.pages.dev/">MyGO!!!!! 台詞搜尋</a></div>
+        <div class="footer-link-item"><a href="https://ave-mujica-searcher.pages.dev/">Ave Mujica 台詞搜尋</a></div>
         <div class="footer-link-item"><a href="https://forms.gle/QtSv3wuDzGuDxhPA9">截圖錯誤回報 (眼睛沒睜開 表情怪異等)</a></div>
         <div class="footer-link-item"><a href="https://forms.gle/xj11uU6o53bHXHuGA">問題 與 建議</a></div>
         <div class="footer-link-item"><a href="#placeholder">GitHub</a></div>
 
         <div class="footer-info">
-            <p>made by kakatsudon | 更新日期: 2025年2月22日 更新至第八集</p>
+            <p>made by kakatsudon | 更新日期: 2025年2月18日</p>
         </div>
     </div>
 
@@ -250,6 +258,8 @@
     </button>
     
     <div id="toast" class="toast"></div>
+
+    
 
     <script>
         let images = [];
@@ -359,7 +369,6 @@
                 item.className = 'result-item';
 
                 const img = document.createElement('img');
-
                 const encodedFilename = encodeURIComponent(filename); //處理一些不支持的字元
 
                 img.src = `src/assets/images/${encodedFilename}`;
@@ -392,8 +401,17 @@
                 btnContainer.appendChild(downloadBtn);
                 item.appendChild(img);
                 item.appendChild(btnContainer);
+
+                // 顯示檔名
+                const filenameText = document.createElement('span');
+                filenameText.className = 'filename-text';
+                filenameText.textContent = filename;
+
+                item.appendChild(filenameText);
                 resultsDiv.appendChild(item);
             });
+
+            console.log(`Total results: ${filtered.length}`);
         });
 
         window.onscroll = function() {
