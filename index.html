@@ -377,19 +377,30 @@
                 const btnContainer = document.createElement('div');
                 btnContainer.className = 'button-container';
 
-                // 複製按鈕
-                const copyBtn = document.createElement('button');
-                copyBtn.className = 'icon-btn';
-                copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
-                copyBtn.onclick = () => copyImage(img);
+                
+                // 複製圖片按鈕
+                const copyImgBtn = document.createElement('button');
+                copyImgBtn.title = "複製圖片至剪貼簿";
+                copyImgBtn.className = 'icon-btn';
+                copyImgBtn.innerHTML = '<i class="fas fa-copy"></i>';
+                copyImgBtn.onclick = () => copyImage(img);
+
+                // 複製連結按鈕
+                const copyLinkBtn = document.createElement('button');
+                copyLinkBtn.title = "複製連結至剪貼簿";
+                copyLinkBtn.className = 'icon-btn';
+                copyLinkBtn.innerHTML = '<i class="fas fa-link"></i>';
+                copyLinkBtn.onclick = () => copyLink(img);
 
                 // 下載按鈕
                 const downloadBtn = document.createElement('button');
+                downloadBtn.title = "下載圖片";
                 downloadBtn.className = 'icon-btn';
                 downloadBtn.innerHTML = '<i class="fas fa-download"></i>';
                 downloadBtn.onclick = () => downloadImage(img.src, filename);
-
-                btnContainer.appendChild(copyBtn);
+                
+                btnContainer.appendChild(copyImgBtn);
+                btnContainer.appendChild(copyLinkBtn);
                 btnContainer.appendChild(downloadBtn);
                 item.appendChild(img);
                 item.appendChild(btnContainer);
