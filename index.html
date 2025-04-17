@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ave Mujica 台詞搜尋">
+	<meta property="og:url" content="https://ave-mujica-searcher.pages.dev/">
+	<meta property="og:image" content="https://ave-mujica-searcher.pages.dev/src/assets/og-preview.jpg">
+	<meta property="og:description" content="歡迎來到Ave Mujica 的世界">
+
     <title>Ave Mujica 台詞搜尋</title>
 	<link rel="icon" type="image/x-icon" href="src/assets/favicon.ico">
+    
     <!-- Font Awesome 圖標庫 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/assets/fontawesome-free-6.4.0-web/css/all.min.css">
+    
     <style>
         :root {
             --primary-color: #881144;
@@ -234,14 +243,18 @@
     </div>
 
     <div class="footer-links">
-        <!--ave mujica截圖-->
+        <!--mygo截圖-->
         <div class="footer-link-item"><a href="https://mygo-searcher.pages.dev/">MyGO!!!!! 台詞搜尋</a></div>
+        <div class="footer-link-item"><a href="https://mygo-gifs.pages.dev/">MyGO!!!!! 動圖搜尋</a></div>
+        <div class="footer-link-item"><a href="https://ave-mujica-searcher.pages.dev/">Ave Mujica 台詞搜尋</a></div>
+        <div class="footer-link-item"><a href="https://ave-mujica-gifs.pages.dev/">Ave Mujica 動圖搜尋</a></div>
+        <div class="footer-link-item"><a href="https://bandori-family.pages.dev/">邦邦世家</a></div>
         <div class="footer-link-item"><a href="https://forms.gle/QtSv3wuDzGuDxhPA9">截圖錯誤回報</a></div>
         <div class="footer-link-item"><a href="https://forms.gle/xj11uU6o53bHXHuGA">問題 與 建議</a></div>
         <div class="footer-link-item"><a href="#placeholder">GitHub</a></div>
 
         <div class="footer-info">
-            <p>made by kakatsudon</p>
+            <a href="https://www.youtube.com/@kakatsudon">made by kakatsudon</a>
         </div>
     </div>
 
@@ -288,6 +301,27 @@
                         .then(() => showToast("圖片已複製到剪貼簿"))
                         .catch(err => showToast("複製失敗: " + err));
                 });
+        }
+
+        async function copyLink(img) {
+            try {
+                // 從 meta 標籤中取得 og:url
+                const metaOgUrl = document.querySelector('meta[property="og:url"]');
+                const baseUrl = metaOgUrl ? metaOgUrl.content : window.location.origin;
+
+                // 取得圖片的相對路徑並解碼
+                const url = new URL(img.src, window.location.origin);
+                const decodedPath = decodeURIComponent(url.pathname);
+
+                // 串接成完整網址
+                const fullUrl = baseUrl.replace(/\/$/, '') + decodedPath;
+
+                // 複製到剪貼簿
+                await navigator.clipboard.writeText(fullUrl);
+                showToast("連結已複製到剪貼簿");
+            } catch (err) {
+                showToast("複製失敗: " + err);
+            }
         }
 
         // 下載圖片功能
@@ -377,14 +411,13 @@
                 const btnContainer = document.createElement('div');
                 btnContainer.className = 'button-container';
 
-                
                 // 複製圖片按鈕
                 const copyImgBtn = document.createElement('button');
                 copyImgBtn.title = "複製圖片至剪貼簿";
                 copyImgBtn.className = 'icon-btn';
                 copyImgBtn.innerHTML = '<i class="fas fa-copy"></i>';
                 copyImgBtn.onclick = () => copyImage(img);
-
+                
                 // 複製連結按鈕
                 const copyLinkBtn = document.createElement('button');
                 copyLinkBtn.title = "複製連結至剪貼簿";
@@ -406,7 +439,6 @@
                 item.appendChild(btnContainer);
                 resultsDiv.appendChild(item);
             });
-            console.log(`Total results: ${filtered.length}`);
         });
 
         window.onscroll = function() {
